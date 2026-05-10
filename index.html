@@ -57,3 +57,42 @@
       <button class="nav-btn mobile-nav-btn" data-section="settings">Instellingen</button>
     </div>
   </header>
+
+  <!-- HOOFDINHOUD-->
+  <main class="app-main" id="app-main">
+
+    <!--SECTIE: PERSONAGES-->
+    <section class="page-section active" id="section-characters" aria-label="Personages">
+
+      <div class="section-hero">
+        <h1 class="section-hero-title">Personages</h1>
+        <p class="section-hero-sub">Doorzoek alle personages uit het Rick &amp; Morty universum</p>
+      </div>
+
+      <!-- Zoek + filter balk -->
+      <div class="toolbar" id="toolbar-characters">
+
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="char-search"
+            class="search-input"
+            placeholder="Zoek een personage..."
+            autocomplete="off"
+            aria-label="Zoek personage op naam"
+          />
+          <button class="search-clear-btn" id="char-search-clear" aria-label="Zoekveld wissen" title="Wissen">x</button>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-group">
+            <label for="char-status">Status</label>
+            <select id="char-status" class="filter-select" aria-label="Filter op status">
+              <option value="">Alle statussen</option>
+              <option value="Alive">Levend</option>
+              <option value="Dead">Dood</option>
+              <option value="unknown">Onbekend</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
