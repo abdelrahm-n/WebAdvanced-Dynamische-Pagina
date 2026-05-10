@@ -15,3 +15,45 @@
   <link rel="stylesheet" href="/src/css/responsive.css" />
 </head>
 <body>
+
+  <!--HEADER / NAVIGATIE-->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+
+      <!-- Logo -->
+      <div class="logo-fallback" id="logo-fallback">
+        <span class="logo-rick">RICK</span>
+        <span class="logo-amp">&amp;</span>
+        <span class="logo-morty">MORTY</span>
+      </div>
+
+      <!-- Hoofdnavigatie -->
+      <nav class="main-nav" id="main-nav" aria-label="Hoofdnavigatie">
+        <button class="nav-btn active" data-section="characters">Personages</button>
+        <button class="nav-btn" data-section="episodes">Afleveringen</button>
+        <button class="nav-btn" data-section="locations">Locaties</button>
+        <button class="nav-btn" data-section="favorites">Favorieten <span class="fav-badge" id="fav-badge">0</span></button>
+        <button class="nav-btn" data-section="settings">Instellingen</button>
+      </nav>
+
+      <!-- Rechterkant: themaswitch + hamburger -->
+      <div class="header-right">
+        <button class="theme-btn" id="theme-btn" aria-label="Wissel thema" title="Wissel thema">
+          <span id="theme-label">Licht</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobiel navigatiemenu -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <button class="nav-btn mobile-nav-btn" data-section="characters">Personages</button>
+      <button class="nav-btn mobile-nav-btn" data-section="episodes">Afleveringen</button>
+      <button class="nav-btn mobile-nav-btn" data-section="locations">Locaties</button>
+      <button class="nav-btn mobile-nav-btn" data-section="favorites">Favorieten</button>
+      <button class="nav-btn mobile-nav-btn" data-section="settings">Instellingen</button>
+    </div>
+  </header>
