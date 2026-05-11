@@ -233,3 +233,66 @@
         <button class="page-btn" id="ep-next">Volgende</button>
       </div>
     </section>
+
+    <!--SECTIE: LOCATIES-->
+    <section class="page-section" id="section-locations" aria-label="Locaties">
+
+      <div class="section-hero">
+        <h1 class="section-hero-title">Locaties</h1>
+        <p class="section-hero-sub">Alle dimensies, planeten en plaatsen uit het R&amp;M universum</p>
+      </div>
+
+      <div class="toolbar" id="toolbar-locations">
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="loc-search"
+            class="search-input"
+            placeholder="Zoek een locatie..."
+            autocomplete="off"
+            aria-label="Zoek locatie op naam"
+          />
+          <button class="search-clear-btn" id="loc-search-clear" aria-label="Wissen">x</button>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-group">
+            <label for="loc-type">Type</label>
+            <select id="loc-type" class="filter-select" aria-label="Filter op type">
+              <option value="">Alle types</option>
+              <option value="Planet">Planeet</option>
+              <option value="Space station">Ruimtestation</option>
+              <option value="Microverse">Microversum</option>
+              <option value="TV">TV</option>
+              <option value="Resort">Resort</option>
+              <option value="Fantasy town">Fantasiestad</option>
+              <option value="Dream">Droom</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="loc-sort">Sorteren</label>
+            <select id="loc-sort" class="filter-select" aria-label="Sorteer locaties">
+              <option value="name-asc">Naam A - Z</option>
+              <option value="name-desc">Naam Z - A</option>
+              <option value="id-asc">ID oplopend</option>
+              <option value="residents-desc">Meeste bewoners</option>
+            </select>
+          </div>
+
+          <button class="reset-btn" id="loc-reset" aria-label="Filters resetten">Reset</button>
+        </div>
+
+        <div class="active-tags" id="loc-active-tags" aria-live="polite"></div>
+      </div>
+
+      <p class="result-count" id="loc-count" aria-live="polite"></p>
+
+      <div class="card-grid card-grid--locations" id="loc-grid" aria-label="Locaties raster"></div>
+
+      <div class="pagination" id="loc-pagination">
+        <button class="page-btn" id="loc-prev" disabled>Vorige</button>
+        <span class="page-info" id="loc-page-info">Pagina 1 van 1</span>
+        <button class="page-btn" id="loc-next">Volgende</button>
+      </div>
+    </section>
