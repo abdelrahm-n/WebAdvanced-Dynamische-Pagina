@@ -318,3 +318,73 @@
         <button class="nav-link-btn" data-section="characters">Personages bekijken</button>
       </div>
     </section>
+
+    <!--SECTIE: INSTELLINGEN-->
+    <section class="page-section" id="section-settings" aria-label="Instellingen">
+
+      <div class="section-hero">
+        <h1 class="section-hero-title">Instellingen</h1>
+        <p class="section-hero-sub">Pas de app aan naar jouw voorkeur</p>
+      </div>
+
+      <div class="settings-layout">
+
+        <!-- Weergave kaart -->
+        <div class="settings-card">
+          <h2 class="settings-card-title">Weergave</h2>
+
+          <div class="setting-row">
+            <label for="set-theme">Thema</label>
+            <select id="set-theme" class="filter-select">
+              <option value="dark">Donker</option>
+              <option value="light">Licht</option>
+            </select>
+          </div>
+
+          <div class="setting-row">
+            <label for="set-cards-per-page">Kaarten per pagina</label>
+            <select id="set-cards-per-page" class="filter-select">
+              <option value="20">20</option>
+              <option value="40">40</option>
+              <option value="60">60</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Locatie kaart -->
+        <div class="settings-card">
+          <h2 class="settings-card-title">Locatie</h2>
+          <div class="setting-row">
+            <label>Jouw locatie</label>
+            <button class="settings-action-btn" id="detect-location-btn">Detecteer locatie</button>
+          </div>
+          <p class="settings-info-text" id="location-display">Geen locatie opgeslagen.</p>
+        </div>
+
+        <!-- Cache kaart -->
+        <div class="settings-card">
+          <h2 class="settings-card-title">Cache &amp; Data</h2>
+          <div class="setting-row">
+            <label>Gecachte API-data</label>
+            <button class="settings-action-btn" id="clear-cache-btn">Cache wissen</button>
+          </div>
+          <div class="setting-row">
+            <label>Alle opgeslagen data</label>
+            <button class="danger-btn" id="clear-all-btn">Alles wissen</button>
+          </div>
+          <p class="settings-info-text" id="cache-status">Laden...</p>
+        </div>
+
+        <!-- Over kaart -->
+        <div class="settings-card">
+          <h2 class="settings-card-title">Over deze app</h2>
+          <p class="settings-info-text">
+            Rick &amp; Morty Explorer haalt data op via de gratis
+            <strong>Rick and Morty API</strong> van Axel Fuhrmann.
+            Gebouwd met Vite en Vanilla JavaScript.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Feedbackformulier -->
