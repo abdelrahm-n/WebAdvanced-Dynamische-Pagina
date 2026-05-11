@@ -296,3 +296,25 @@
         <button class="page-btn" id="loc-next">Volgende</button>
       </div>
     </section>
+
+    <!--SECTIE: FAVORIETEN-->
+    <section class="page-section" id="section-favorites" aria-label="Favorieten">
+
+      <div class="section-hero">
+        <h1 class="section-hero-title">Mijn Favorieten</h1>
+        <p class="section-hero-sub">Jouw opgeslagen personages</p>
+      </div>
+
+      <div class="favorites-bar">
+        <span class="result-count" id="fav-total">0 personages opgeslagen</span>
+        <button class="danger-btn" id="fav-clear-all">Alles verwijderen</button>
+      </div>
+
+      <div class="card-grid" id="fav-grid" aria-label="Favorieten raster"></div>
+
+      <div class="empty-state hidden" id="fav-empty">
+        <p class="empty-title">Nog geen favorieten</p>
+        <p class="empty-sub">Klik op het hart op een personagekaart om hem op te slaan.</p>
+        <button class="nav-link-btn" data-section="characters">Personages bekijken</button>
+      </div>
+    </section>
