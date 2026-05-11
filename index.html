@@ -152,3 +152,84 @@
         <button class="page-btn" id="char-next" aria-label="Volgende pagina">Volgende</button>
       </div>
     </section>
+
+    <!--SECTIE: AFLEVERINGEN-->
+    <section class="page-section" id="section-episodes" aria-label="Afleveringen">
+
+      <div class="section-hero">
+        <h1 class="section-hero-title">Afleveringen</h1>
+        <p class="section-hero-sub">Alle afleveringen van Rick &amp; Morty op een rij</p>
+      </div>
+
+      <div class="toolbar" id="toolbar-episodes">
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="ep-search"
+            class="search-input"
+            placeholder="Zoek een aflevering..."
+            autocomplete="off"
+            aria-label="Zoek aflevering op naam"
+          />
+          <button class="search-clear-btn" id="ep-search-clear" aria-label="Zoekveld wissen">x</button>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-group">
+            <label for="ep-season">Seizoen</label>
+            <select id="ep-season" class="filter-select" aria-label="Filter op seizoen">
+              <option value="">Alle seizoenen</option>
+              <option value="S01">Seizoen 1</option>
+              <option value="S02">Seizoen 2</option>
+              <option value="S03">Seizoen 3</option>
+              <option value="S04">Seizoen 4</option>
+              <option value="S05">Seizoen 5</option>
+              <option value="S06">Seizoen 6</option>
+              <option value="S07">Seizoen 7</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="ep-sort">Sorteren</label>
+            <select id="ep-sort" class="filter-select" aria-label="Sorteer afleveringen">
+              <option value="ep-asc">Episode oplopend</option>
+              <option value="ep-desc">Episode aflopend</option>
+              <option value="name-asc">Naam A - Z</option>
+              <option value="name-desc">Naam Z - A</option>
+              <option value="date-asc">Datum (oud - nieuw)</option>
+              <option value="date-desc">Datum (nieuw - oud)</option>
+            </select>
+          </div>
+
+          <button class="reset-btn" id="ep-reset" aria-label="Filters resetten">Reset</button>
+        </div>
+
+        <div class="active-tags" id="ep-active-tags" aria-live="polite"></div>
+      </div>
+
+      <p class="result-count" id="ep-count" aria-live="polite"></p>
+
+      <!-- Afleveringentabel (lijst met 6+ kolommen) -->
+      <div class="table-wrap">
+        <table class="ep-table" id="ep-table" aria-label="Afleveringen tabel">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Naam</th>
+              <th scope="col">Code</th>
+              <th scope="col">Seizoen</th>
+              <th scope="col">Aflevering</th>
+              <th scope="col">Uitzenddatum</th>
+              <th scope="col">Personages</th>
+            </tr>
+          </thead>
+          <tbody id="ep-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="ep-pagination">
+        <button class="page-btn" id="ep-prev" disabled>Vorige</button>
+        <span class="page-info" id="ep-page-info">Pagina 1 van 1</span>
+        <button class="page-btn" id="ep-next">Volgende</button>
+      </div>
+    </section>
