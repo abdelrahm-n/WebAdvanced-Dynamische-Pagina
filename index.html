@@ -428,3 +428,37 @@
       </div>
 
     </section>
+
+  </main><!-- /.app-main -->
+
+  <!--MODAL: PERSONAGEDETAILS-->
+  <div
+    class="modal-backdrop"
+    id="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-char-name"
+    aria-hidden="true"
+  >
+    <div class="modal-box" id="modal-box">
+      <button class="modal-close-btn" id="modal-close" aria-label="Modal sluiten">X</button>
+      <div class="modal-inner" id="modal-inner">
+        <!-- Dynamisch gevuld via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!--TOAST BERICHTEN-->
+  <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Scroll-naar-boven knop -->
+  <button class="scroll-up-btn hidden" id="scroll-up" aria-label="Naar boven">Omhoog</button>
+
+  <footer class="site-footer">
+    <p>Rick &amp; Morty Explorer &mdash; Data via de <a href="https://rickandmortyapi.com" target="_blank" rel="noopener noreferrer">Rick and Morty API</a></p>
+    <p class="footer-credit">Gebouwd voor Dynamic Web &mdash; Vite + Vanilla JS</p>
+  </footer>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
