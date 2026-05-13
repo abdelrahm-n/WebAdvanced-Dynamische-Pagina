@@ -150,3 +150,116 @@ input, select, textarea { font-family: var(--font-body); }
   -webkit-text-stroke: 2px #000;
 }
 
+/* Navigatie */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.nav-btn {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.07em;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  color: var(--text-sub);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+  background: var(--card);
+}
+
+.nav-btn.active {
+  color: var(--teal);
+  border: var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.fav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: 100px;
+  background: var(--green);
+  color: #000;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 800;
+  margin-left: 4px;
+  border: 1px solid var(--green-dark);
+  vertical-align: middle;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+
+.theme-btn {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.07em;
+  padding: 0.3rem 0.9rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+.theme-btn:hover {
+  background: var(--teal);
+  color: #000;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.hamburger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: 0.75rem 1.5rem;
+  gap: 0.3rem;
+  background: var(--surface);
+  border-top: var(--border);
+}
+
+.mobile-menu.open { display: flex; }
+.mobile-nav-btn { text-align: left; padding: 0.6rem 0.9rem; }
+
