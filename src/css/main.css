@@ -1,0 +1,43 @@
+/*  =
+   RICK & MORTY EXPLORER — main.css
+   Cartoony stijl: dikke zwarte outlines, 2 hoofdkleuren,
+   Bangers titels, geen gradients, geen glow-spam */
+
+:root {
+  /* Donker thema (standaard) */
+  --bg:           #111318;
+  --surface:      #1a1d24;
+  --card:         #20242d;
+  --card-hover:   #272b36;
+
+  --text:         #e4e8e0;
+  --text-sub:     #8a9080;
+  --text-muted:   #50584a;
+
+  /* Twee hoofdkleuren: groen (accent) en teal (links/titels) */
+  --green:        #97ce4c;
+  --green-dark:   #5a8020;
+  --teal:         #00b5cc;
+  --teal-dark:    #007a8a;
+
+  /* Functionele kleuren */
+  --danger:       #cc4444;
+  --danger-dark:  #8a2020;
+  --success:      #97ce4c;
+
+  /* Cartoon outline — altijd zwart, nooit gekleurd */
+  --border:       2px solid #000;
+  --border-thick: 3px solid #000;
+
+  --shadow:       3px 3px 0px #000;
+  --shadow-hover: 5px 5px 0px #000;
+
+  --radius:       6px;
+  --radius-lg:    10px;
+
+  --font-display: 'Bangers', cursive;
+  --font-body:    'Nunito', sans-serif;
+
+  --header-h:     72px;
+  --transition:   0.18s ease;
+}
