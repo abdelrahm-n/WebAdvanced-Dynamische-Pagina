@@ -41,3 +41,51 @@
   --header-h:     72px;
   --transition:   0.18s ease;
 }
+
+/* Licht thema — zelfde structuur, andere waarden */
+[data-theme="light"] {
+  --bg:           #eef2e8;
+  --surface:      #dde5d4;
+  --card:         #ffffff;
+  --card-hover:   #f0f5ea;
+
+  --text:         #141a10;
+  --text-sub:     #3a4830;
+  --text-muted:   #7a8870;
+
+  --green:        #5a9010;
+  --green-dark:   #3a6005;
+  --teal:         #007a8a;
+  --teal-dark:    #005060;
+
+  --danger:       #aa2222;
+  --danger-dark:  #700e0e;
+
+  --shadow:       3px 3px 0px rgba(0,0,0,0.35);
+  --shadow-hover: 5px 5px 0px rgba(0,0,0,0.35);
+}
+
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+input, select, textarea { font-family: var(--font-body); }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; border: 1px solid #000; }
+
