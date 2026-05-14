@@ -464,3 +464,48 @@ input, select, textarea { font-family: var(--font-body); }
   letter-spacing: 0.03em;
 }
 
+/* KAARTGRID */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.75rem;
+}
+
+/* PAGINERING*/
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1.25rem 0 2rem;
+}
+
+.page-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.07em;
+  padding: 0.45rem 1.35rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+.page-btn:hover:not(:disabled) {
+  background: var(--teal);
+  color: #000;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+.page-btn:disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; }
+
+.page-info {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-sub);
+}
+
