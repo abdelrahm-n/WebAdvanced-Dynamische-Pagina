@@ -638,3 +638,234 @@ input, select, textarea { font-family: var(--font-body); }
   text-transform: uppercase;
   color: var(--text-sub);
   margin-bottom: 0.3rem;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition);
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  box-shadow: var(--shadow-hover);
+}
+
+.form-field input.invalid,
+.form-field textarea.invalid {
+  border-color: var(--danger);
+  box-shadow: 2px 2px 0 var(--danger-dark);
+}
+
+.field-error {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--danger);
+  margin-top: 0.25rem;
+  min-height: 1em;
+}
+
+.form-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-sub);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--green);
+  flex-shrink: 0;
+  border: var(--border);
+}
+
+.required-mark { color: var(--danger); }
+
+.submit-btn {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  padding: 0.6rem 1.75rem;
+  background: var(--green);
+  color: #000;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+.submit-btn:hover {
+  background: var(--green-dark);
+  color: #fff;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+.form-success {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--success);
+  padding: 0.65rem 1rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+/* MODAL */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-box {
+  position: relative;
+  background: var(--card);
+  border: var(--border-thick);
+  border-radius: var(--radius-lg);
+  box-shadow: 6px 6px 0 #000;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.94) translateY(16px);
+  transition: transform 0.25s ease;
+}
+
+.modal-backdrop.open .modal-box {
+  transform: scale(1) translateY(0);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 10;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.07em;
+  width: 36px;
+  height: 36px;
+  border: var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+.modal-close-btn:hover {
+  background: var(--danger);
+  color: #fff;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+/* TOAST */
+.toast-stack {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.toast {
+  padding: 0.65rem 1.1rem;
+  background: var(--card);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  pointer-events: all;
+  max-width: 300px;
+  animation: toastIn 0.25s ease both;
+}
+
+.toast.success { border-left: 4px solid var(--green); }
+.toast.error   { border-left: 4px solid var(--danger); }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastSlideOut {
+  to { opacity: 0; transform: translateX(20px); }
+}
+
+/* SCROLL-NAAR-BOVEN KNOP */
+.scroll-up-btn {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  z-index: 50;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.9rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+.scroll-up-btn:hover {
+  background: var(--teal);
+  color: #000;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+/* FOOTER */
+.site-footer {
+  border-top: var(--border);
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.9;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.footer-credit { opacity: 0.55; }
+
+/* HULPKLASSEN */
+.hidden { display: none !important; }
