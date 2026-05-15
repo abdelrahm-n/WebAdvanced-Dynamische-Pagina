@@ -520,3 +520,67 @@
   color: var(--text-muted);
 }
 
+/* LOCATIEKAARTEN*/
+.card-grid--locations {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+
+.loc-card {
+  background: var(--card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.15rem;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  height: 190px;
+  justify-content: space-between;
+}
+
+.loc-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.loc-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  color: var(--teal);
+  line-height: 1.2;
+  display: -webkit-box;
+  /*-webkit-line-clamp: 2;*/
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.loc-meta-row   { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.loc-meta-item  { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; }
+
+.loc-meta-label {
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+}
+
+.loc-meta-value { font-weight: 700; color: var(--text); }
+
+.loc-resident-count {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.03em;
+  color: var(--green);
+}
+
+.loc-resident-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
