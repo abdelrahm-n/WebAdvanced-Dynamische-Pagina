@@ -438,3 +438,85 @@
 }
 
 /* AFLEVERINGENTABEL*/
+.table-wrap {
+  overflow-x: auto;
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+.ep-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  background: var(--card);
+}
+
+.ep-table thead {
+  background: var(--surface);
+  border-bottom: var(--border);
+}
+
+.ep-table th {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.09em;
+  color: var(--teal);
+  padding: 0.8rem 0.9rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.ep-table tbody tr {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  transition: background var(--transition);
+}
+
+[data-theme="dark"] .ep-table tbody tr { border-bottom-color: rgba(255,255,255,0.05); }
+
+.ep-table tbody tr:last-child { border-bottom: none; }
+.ep-table tbody tr:hover      { background: var(--card-hover); }
+
+.ep-table td {
+  padding: 0.7rem 0.9rem;
+  color: var(--text);
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.ep-table td:first-child {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.ep-code-badge {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border: 2px solid var(--green);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: 0.04em;
+}
+
+.ep-season-badge {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border: var(--border);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-sub);
+}
+
+.ep-char-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
