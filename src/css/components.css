@@ -110,3 +110,155 @@
   box-shadow: 3px 3px 0 #000;
 }
 
+/* Kaartbody */
+.char-body {
+  padding: 0.6rem 0.8rem 0.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.char-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  line-height: 1.2;
+  display: -webkit-box;
+  /*-webkit-line-clamp: 2;*/
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.char-meta {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* HOVER-STATS OVERLAY
+   Verschijnt bij hoveren, 
+   toont 6 stats */
+.char-hover-stats {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  pointer-events: none;
+  border: var(--border);
+}
+
+.char-card:hover .char-hover-stats {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.hover-stats-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  color: var(--teal);
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.45rem;
+  border-bottom: var(--border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hover-stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+}
+
+.stat-label {
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: var(--text);
+  text-align: right;
+  display: -webkit-box;
+  /*-webkit-line-clamp: 1;*/
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.stat-value.alive  { color: var(--green); }
+.stat-value.dead   { color: var(--danger); }
+
+/* Actieknoppen in hover-overlay */
+.hover-stats-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: var(--border);
+}
+
+.hover-detail-btn {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.07em;
+  padding: 0.35rem 0.5rem;
+  background: var(--teal);
+  color: #000;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+.hover-detail-btn:hover {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+.hover-fav-btn {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.65rem;
+  background: transparent;
+  color: var(--danger);
+  border: 2px solid var(--danger);
+  border-radius: var(--radius);
+  box-shadow: 2px 2px 0 var(--danger-dark);
+  transition: all var(--transition);
+}
+
+.hover-fav-btn:hover,
+.hover-fav-btn.active {
+  background: var(--danger);
+  color: #fff;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
