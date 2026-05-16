@@ -1,0 +1,61 @@
+/* RICK & MORTY EXPLORER — responsive.css */
+
+/*  TABLET: max 960px  */
+@media (max-width: 960px) {
+  .main-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .logo-rick,
+  .logo-morty {
+    font-size: 2rem;
+  }
+
+  .logo-sub {
+    display: none;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .char-card {
+    height: 300px;
+  }
+
+  .char-photo-wrap {
+    height: 185px;
+  }
+
+  .skeleton-photo {
+    height: 185px;
+  }
+
+  .settings-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal-char-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .modal-badges {
+    justify-content: center;
+  }
+
+  .modal-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ep-table th:nth-child(5),
+  .ep-table td:nth-child(5) {
+    display: none;
+  }
+}
