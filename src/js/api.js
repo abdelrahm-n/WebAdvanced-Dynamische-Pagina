@@ -62,3 +62,81 @@ export const apiFetch = async (url) => {
   cacheOpslaan(cacheKey, data);
   return data;
 };
+
+// --- Personages ---
+
+export const fetchPersonages = async ({ pagina = 1, naam = '', status = '', geslacht = '', soort = '' } = {}) => {
+  const params = new URLSearchParams({ page: pagina });
+  if (naam)     params.set('name',    naam.trim());
+  if (status)   params.set('status',  status);
+  if (geslacht) params.set('gender',  geslacht);
+  if (soort)    params.set('species', soort);
+
+  return apiFetch(`${BASE_URL}/character?${params}`);
+};
+
+export const fetchPersonageById = async (id) => {
+  return apiFetch(`${BASE_URL}/character/${id}`);
+};
+
+// --- Afleveringen ---
+
+export const fetchAfleveringen = async ({ pagina = 1, naam = '', episode = '' } = {}) => {
+  const params = new URLSearchParams({ page: pagina });
+  if (naam)    params.set('name',    naam.trim());
+  if (episode) params.set('episode', episode);
+
+  return apiFetch(`${BASE_URL}/episode?${params}`);
+};
+
+// Haal ALLE afleveringen op via meerdere pagina's tegelijk (Promise.all)
+export const fetchAlleAfleveringen = async () => {
+  const eerste = await fetchAfleveringen({ pagina: 1 });
+  const totaalPaginas = eerste.info?.pages || 1;
+
+  if (totaalPaginas === 1) return eerste.results || [];
+
+  // Bouw een array van paginanummers en haal ze parallel op
+  const paginaNummers = Array.from({ length: totaalPaginas - 1 }, (_, i) => i + 2);
+  const rest = await Promise.all(paginaNummers.map(p => fetchAfleveringen({ pagina: p })));
+
+  return [
+    ...(eerste.results || []),
+    ...rest.flatMap(r => r.results || []),
+  ];
+};
+
+// --- Locaties ---
+
+export const fetchLocaties = async ({ pagina = 1, naam = '', type = '' } = {}) => {
+  const params = new URLSearchParams({ page: pagina });
+  if (naam) params.set('name', naam.trim());
+  if (type) params.set('type', type);
+
+  return apiFetch(`${BASE_URL}/location?${params}`);
+};
+
+// --- Hulpfuncties ---
+
+export const vertaalStatus = (status) => {
+  const map = { Alive: 'Levend', Dead: 'Dood', unknown: 'Onbekend' };
+  return map[status] || status;
+};
+
+export const vertaalGeslacht = (geslacht) => {
+  const map = { Male: 'Man', Female: 'Vrouw', Genderless: 'Genderloos', unknown: 'Onbekend' };
+  return map[geslacht] || geslacht;
+};
+
+export const formateerDatum = (datumStr) => {
+  if (!datumStr) return 'Onbekend';
+  const d = new Date(datumStr);
+  if (isNaN(d)) return datumStr;
+  return d.toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' });
+};
+
+export const parserEpisodeCode = (code) => {
+  const match = code.match(/S(\d+)E(\d+)/i);
+  if (!match) return { seizoen: 0, aflevering: 0 };
+  return { seizoen: parseInt(match[1], 10), aflevering: parseInt(match[2], 10) };
+};
