@@ -59,3 +59,142 @@
     display: none;
   }
 }
+
+/*  MOBIEL: max 640px  */
+@media (max-width: 640px) {
+  :root {
+    --header-h: 64px;
+  }
+
+  .logo-rick,
+  .logo-morty {
+    font-size: 1.7rem;
+  }
+
+  .logo-amp {
+    font-size: 1.4rem;
+  }
+
+  .app-main {
+    padding: calc(var(--header-h) + 1.5rem) 1rem 3rem;
+  }
+
+  .section-hero-title {
+    font-size: 2.2rem;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .char-card {
+    height: 280px;
+  }
+
+  .char-photo-wrap {
+    height: 170px;
+  }
+
+  .skeleton-photo {
+    height: 170px;
+  }
+
+  .skeleton-card {
+    height: 280px;
+  }
+
+  /* Hover-stats altijd zichtbaar op mobiel (geen hover beschikbaar) */
+  .char-hover-stats {
+    display: none;
+  }
+
+  .char-photo-wrap::after {
+    display: none;
+  }
+
+  .card-grid--locations {
+    grid-template-columns: 1fr;
+  }
+
+  .loc-card {
+    height: auto;
+  }
+
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-char-photo,
+  .modal-char-photo-placeholder {
+    width: 110px;
+    height: 110px;
+  }
+
+  .modal-char-name {
+    font-size: 1.5rem;
+  }
+
+  .modal-info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal-char-header {
+    padding: 1.25rem;
+  }
+
+  .modal-body {
+    padding: 1.25rem;
+  }
+
+  /* Tabel: minder kolommen op mobiel */
+  .ep-table th:nth-child(4),
+  .ep-table td:nth-child(4),
+  .ep-table th:nth-child(5),
+  .ep-table td:nth-child(5),
+  .ep-table th:nth-child(6),
+  .ep-table td:nth-child(6) {
+    display: none;
+  }
+
+  .toast-stack {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast {
+    max-width: 100%;
+  }
+
+  .scroll-up-btn {
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  .pagination {
+    gap: 0.75rem;
+  }
+
+  .page-btn {
+    font-size: 0.9rem;
+    padding: 0.45rem 1rem;
+  }
+}
+
+/* GROOT SCHERM: min 1400px */
+@media (min-width: 1400px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
