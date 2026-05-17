@@ -63,3 +63,47 @@ export const verwijderFavoriet = (id) => {
   lsSchrijf(SLEUTELS.favorieten, bijgewerkt);
   return bijgewerkt;
 };
+
+export const toggleFavoriet = (personage) => {
+  if (isFavoriet(personage.id)) {
+    return { toegevoegd: false, favorieten: verwijderFavoriet(personage.id) };
+  } else {
+    return { toegevoegd: true, favorieten: voegFavorietToe(personage) };
+  }
+};
+
+export const leegFavorieten = () => {
+  localStorage.removeItem(SLEUTELS.favorieten);
+  return [];
+};
+
+// --- Thema ---
+
+export const getThema = () => lsLees(SLEUTELS.thema, 'dark');
+export const setThema = (thema) => lsSchrijf(SLEUTELS.thema, thema);
+
+// --- Kaarten per pagina ---
+
+export const getKaartenPerPagina = () => lsLees(SLEUTELS.kaarten, 20);
+export const setKaartenPerPagina = (n) => lsSchrijf(SLEUTELS.kaarten, n);
+
+// --- Locatie ---
+
+export const getLocatie = () => lsLees(SLEUTELS.locatie, null);
+export const setLocatie = (loc) => lsSchrijf(SLEUTELS.locatie, loc);
+export const verwijderLocatie = () => localStorage.removeItem(SLEUTELS.locatie);
+
+// --- Feedback ---
+
+export const slaFeedbackOp = (data) => {
+  const alle = lsLees(SLEUTELS.feedback, []);
+  alle.push({ ...data, datum: new Date().toISOString() });
+  return lsSchrijf(SLEUTELS.feedback, alle);
+};
+
+// --- Alles wissen ---
+
+export const wisAlles = () => {
+  const appSleutels = Object.keys(localStorage).filter(k => k.startsWith('rm_'));
+  appSleutels.forEach(k => localStorage.removeItem(k));
+};
