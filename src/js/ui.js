@@ -92,3 +92,60 @@ const bouwPersonageKaart = (personage) => {
     </article>
   `;
 };
+
+// Render een lijst personages in een container
+export const renderPersonages = (container, personages, onDetail, onFavWijziging) => {
+  if (!personages.length) {
+    container.innerHTML = `<p style="color:var(--text-muted);font-weight:700;padding:2rem 0;grid-column:1/-1;">Geen personages gevonden met deze filters.</p>`;
+    return;
+  }
+
+  // Gebruik .map() om alle kaarten te bouwen
+  container.innerHTML = personages.map(p => bouwPersonageKaart(p)).join('');
+
+  // Event listeners op elke kaart
+  container.querySelectorAll('.char-card').forEach((kaart, i) => {
+    kaart.style.animationDelay = `${i * 0.03}s`;
+
+    // Klik op foto of hover-knop opent detail
+    kaart.querySelectorAll('[data-detail]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        onDetail(parseInt(el.dataset.detail, 10));
+      });
+    });
+
+    // Keyboard: enter of spatie opent detail
+    kaart.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onDetail(parseInt(kaart.dataset.id, 10));
+      }
+    });
+  });
+
+  // Favoriet-knoppen
+  container.querySelectorAll('[data-fav-id]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.favId, 10);
+      const personage = personages.find(p => p.id === id);
+      if (!personage) return;
+
+      const { toegevoegd } = toggleFavoriet(personage);
+
+      // Update alle knoppen voor dit personage op de pagina
+      document.querySelectorAll(`[data-fav-id="${id}"]`).forEach(b => {
+        b.classList.toggle('active', toegevoegd);
+        if (b.classList.contains('char-fav-btn')) {
+          b.innerHTML = toegevoegd ? '&#10084;' : '&#9825;';
+        }
+        if (b.classList.contains('hover-fav-btn')) {
+          b.textContent = toegevoegd ? 'Opgeslagen' : 'Opslaan';
+        }
+      });
+
+      if (onFavWijziging) onFavWijziging(toegevoegd, personage);
+    });
+  });
+};
