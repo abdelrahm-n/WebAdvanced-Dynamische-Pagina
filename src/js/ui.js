@@ -149,3 +149,74 @@ export const renderPersonages = (container, personages, onDetail, onFavWijziging
     });
   });
 };
+
+// --- Modal inhoud ---
+
+export const renderModalInhoud = (inner, personage, onFavWijziging) => {
+  const fav = isFavoriet(personage.id);
+  const sc  = statusKlasse(personage.status);
+  const aantalEps = personage.episode?.length || 0;
+
+  // Toon max 30 aflevering-chips
+  const epChips = (personage.episode || []).slice(0, 30)
+    .map(url => `<span class="ep-chip">E${url.split('/').pop()}</span>`)
+    .join('');
+
+  const meerEps = aantalEps > 30
+    ? `<span class="ep-chip" style="border-color:var(--text-muted);color:var(--text-muted)">+${aantalEps - 30} meer</span>`
+    : '';
+
+  inner.innerHTML = `
+    <div class="modal-char-header">
+      <img class="modal-char-photo" src="${esc(personage.image)}" alt="${esc(personage.name)}" />
+      <div class="modal-char-title-block">
+        <h2 class="modal-char-name" id="modal-char-name">${esc(personage.name)}</h2>
+        <div class="modal-badges">
+          <span class="badge badge-species">${esc(personage.species)}</span>
+          <span class="badge badge-gender">${vertaalGeslacht(personage.gender)}</span>
+          ${personage.type ? `<span class="badge badge-type">${esc(personage.type)}</span>` : ''}
+          <span class="char-status-badge ${sc}" style="position:static;display:inline-flex;">${vertaalStatus(personage.status)}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-section-label">Personage-informatie</p>
+      <div class="modal-info-grid">
+        <div class="modal-info-item"><p class="modal-info-label">ID</p><p class="modal-info-value">#${personage.id}</p></div>
+        <div class="modal-info-item"><p class="modal-info-label">Status</p><p class="modal-info-value">${vertaalStatus(personage.status)}</p></div>
+        <div class="modal-info-item"><p class="modal-info-label">Soort</p><p class="modal-info-value">${esc(personage.species)}</p></div>
+        <div class="modal-info-item"><p class="modal-info-label">Geslacht</p><p class="modal-info-value">${vertaalGeslacht(personage.gender)}</p></div>
+        <div class="modal-info-item"><p class="modal-info-label">Herkomst</p><p class="modal-info-value">${esc(personage.origin?.name || 'Onbekend')}</p></div>
+        <div class="modal-info-item"><p class="modal-info-label">Huidige locatie</p><p class="modal-info-value">${esc(personage.location?.name || 'Onbekend')}</p></div>
+        <div class="modal-info-item"><p class="modal-info-label">Type</p><p class="modal-info-value">${esc(personage.type || '—')}</p></div>
+        <div class="modal-info-item"><p class="modal-info-label">Afleveringen</p><p class="modal-info-value">${aantalEps}</p></div>
+      </div>
+
+      ${epChips ? `
+        <p class="modal-section-label" style="margin-top:1.25rem;">Voorkomt in afleveringen</p>
+        <div class="modal-episodes-list">${epChips}${meerEps}</div>
+      ` : ''}
+
+      <div class="modal-actions">
+        <button class="modal-fav-btn ${fav ? 'active' : ''}" id="modal-fav-btn" data-modal-fav="${personage.id}">
+          ${fav ? 'Verwijder favoriet' : 'Voeg toe aan favorieten'}
+        </button>
+        <a class="page-btn" href="https://rickandmortyapi.com/api/character/${personage.id}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:inline-flex;align-items:center;">
+          API-link
+        </a>
+      </div>
+    </div>
+  `;
+
+  // Favoriet-knop in modal
+  const modalFavBtn = inner.querySelector('#modal-fav-btn');
+  if (modalFavBtn) {
+    modalFavBtn.addEventListener('click', () => {
+      const { toegevoegd } = toggleFavoriet(personage);
+      modalFavBtn.classList.toggle('active', toegevoegd);
+      modalFavBtn.textContent = toegevoegd ? 'Verwijder favoriet' : 'Voeg toe aan favorieten';
+      if (onFavWijziging) onFavWijziging(toegevoegd, personage);
+    });
+  }
+};
