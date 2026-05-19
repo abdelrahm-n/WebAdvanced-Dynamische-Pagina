@@ -245,3 +245,69 @@ export const renderAfleveringenTabel = (tbody, afleveringen) => {
     `;
   }).join('');
 };
+
+// --- Locatiekaarten ---
+
+const bouwLocatieKaart = (loc) => `
+  <article class="loc-card" aria-label="Locatie: ${esc(loc.name)}">
+    <h3 class="loc-name">${esc(loc.name)}</h3>
+    <div class="loc-meta-row">
+      <div class="loc-meta-item">
+        <span class="loc-meta-label">Type</span>
+        <span class="loc-meta-value">${esc(loc.type || 'Onbekend')}</span>
+      </div>
+      <div class="loc-meta-item">
+        <span class="loc-meta-label">Dimensie</span>
+        <span class="loc-meta-value">${esc(loc.dimension || 'Onbekend')}</span>
+      </div>
+      <div class="loc-meta-item">
+        <span class="loc-meta-label">ID</span>
+        <span class="loc-meta-value">#${loc.id}</span>
+      </div>
+    </div>
+    <div>
+      <span class="loc-resident-count">${loc.residents?.length || 0}</span>
+      <span class="loc-resident-label"> bewoners</span>
+    </div>
+  </article>
+`;
+
+export const renderLocaties = (container, locaties) => {
+  if (!locaties.length) {
+    container.innerHTML = `<p style="color:var(--text-muted);font-weight:700;padding:2rem 0;grid-column:1/-1;">Geen locaties gevonden.</p>`;
+    return;
+  }
+  container.innerHTML = locaties.map(l => bouwLocatieKaart(l)).join('');
+};
+
+// --- Filter tags ---
+
+export const renderFilterTags = (container, filters, onVerwijder) => {
+  // filter() om alleen actieve filters te tonen
+  const actief = Object.entries(filters).filter(([, v]) => v !== '');
+
+  if (!actief.length) {
+    container.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = actief.map(([key, waarde]) => `
+    <span class="filter-tag">
+      ${esc(waarde)}
+      <button data-remove="${esc(key)}" aria-label="Filter verwijderen">x</button>
+    </span>
+  `).join('');
+
+  container.querySelectorAll('[data-remove]').forEach(btn => {
+    btn.addEventListener('click', () => onVerwijder(btn.dataset.remove));
+  });
+};
+
+// --- Paginering ---
+
+export const updatePaginering = ({ vorigeBtn, volgendeBtn, infoEl, huidigePagina, totaalPaginas }) => {
+  if (!vorigeBtn || !volgendeBtn || !infoEl) return;
+  vorigeBtn.disabled   = huidigePagina <= 1;
+  volgendeBtn.disabled = huidigePagina >= totaalPaginas;
+  infoEl.textContent   = `Pagina ${huidigePagina} van ${totaalPaginas}`;
+};
