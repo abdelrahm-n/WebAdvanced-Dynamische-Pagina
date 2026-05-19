@@ -122,11 +122,7 @@ const charPrev     = $('#char-prev');
 const charNext     = $('#char-next');
 const charPageInfo = $('#char-page-info');
 
-let charAanHetLaden = false;
-
 const laadPersonages = async () => {
-  if (charAanHetLaden) return;
-  charAanHetLaden = true;
   try {
     const cpp = state.kaartenPerPagina;
     const apiPaginasNodig = Math.ceil(cpp / 20);
@@ -145,9 +141,12 @@ const laadPersonages = async () => {
       })
     );
 
-    // Haal alle paginas parallel op (Promise.all)
-    const responses = await Promise.all(requests);
-    let resultaten  = responses.flatMap(r => r.results || []).slice(0, cpp);
+    // Haal alle paginas op; mislukte paginas worden overgeslagen
+    const resultatenRaw = await Promise.allSettled(requests);
+    const responses = resultatenRaw
+      .filter(r => r.status === 'fulfilled')
+      .map(r => r.value);
+    let resultaten = responses.flatMap(r => r.results || []).slice(0, cpp);
 
     const apiTotaalPaginas = responses[0]?.info?.pages || 1;
     const apiTotaalAantal  = responses[0]?.info?.count || 0;
@@ -171,8 +170,6 @@ const laadPersonages = async () => {
     console.error('Personages laden mislukt:', err);
     charGrid.innerHTML = `<p style="color:var(--danger);font-weight:700;padding:2rem 0;grid-column:1/-1;">Kon personages niet laden. Controleer je internetverbinding.</p>`;
     toonToast('Personages konden niet geladen worden.', 'error');
-  } finally {
-    charAanHetLaden = false;
   }
 };
 
@@ -439,11 +436,7 @@ const locPrev     = $('#loc-prev');
 const locNext     = $('#loc-next');
 const locPageInfo = $('#loc-page-info');
 
-let locAanHetLaden = false;
-
 const laadLocaties = async () => {
-  if (locAanHetLaden) return;
-  locAanHetLaden = true;
   try {
     toonSkeletons(locGrid, 12);
 
@@ -481,8 +474,6 @@ const laadLocaties = async () => {
   } catch (err) {
     console.error('Locaties laden mislukt:', err);
     toonToast('Locaties konden niet geladen worden.', 'error');
-  } finally {
-    locAanHetLaden = false;
   }
 };
 
