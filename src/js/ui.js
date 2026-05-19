@@ -220,3 +220,28 @@ export const renderModalInhoud = (inner, personage, onFavWijziging) => {
     });
   }
 };
+
+// --- Afleveringentabel ---
+
+export const renderAfleveringenTabel = (tbody, afleveringen) => {
+  if (!afleveringen.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">Geen afleveringen gevonden.</td></tr>`;
+    return;
+  }
+
+  // Gebruik .map() om tabelrijen te bouwen
+  tbody.innerHTML = afleveringen.map(ep => {
+    const { seizoen, aflevering } = parserEpisodeCode(ep.episode);
+    return `
+      <tr>
+        <td>${ep.id}</td>
+        <td>${esc(ep.name)}</td>
+        <td><span class="ep-code-badge">${esc(ep.episode)}</span></td>
+        <td><span class="ep-season-badge">S${String(seizoen).padStart(2, '0')}</span></td>
+        <td>${String(aflevering).padStart(2, '0')}</td>
+        <td>${formateerDatum(ep.air_date)}</td>
+        <td><span class="ep-char-count">${ep.characters?.length || 0} personages</span></td>
+      </tr>
+    `;
+  }).join('');
+};
