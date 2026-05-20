@@ -114,3 +114,73 @@ const schaduwObserver = new IntersectionObserver(
 );
 if ($('#app-main')) schaduwObserver.observe($('#app-main'));
 
+// --- Personages laden ---
+
+const charGrid     = $('#char-grid');
+const charCount    = $('#char-count');
+const charPrev     = $('#char-prev');
+const charNext     = $('#char-next');
+const charPageInfo = $('#char-page-info');
+
+const laadPersonages = async () => {
+  try {
+    const cpp = state.kaartenPerPagina;
+    const apiPaginasNodig = Math.ceil(cpp / 20);
+    const startPagina = (state.charPagina - 1) * apiPaginasNodig + 1;
+
+    toonSkeletons(charGrid, cpp);
+
+    // Bouw requests voor alle benodigde API-paginas
+    const requests = Array.from({ length: apiPaginasNodig }, (_, i) =>
+      fetchPersonages({
+        pagina:   startPagina + i,
+        naam:     state.charFilters.naam,
+        status:   state.charFilters.status,
+        geslacht: state.charFilters.geslacht,
+        soort:    state.charFilters.soort,
+      })
+    );
+
+    // Haal alle paginas parallel op (Promise.all)
+    const responses = await Promise.all(requests);
+    let resultaten  = responses.flatMap(r => r.results || []).slice(0, cpp);
+
+    const apiTotaalPaginas = responses[0]?.info?.pages || 1;
+    const apiTotaalAantal  = responses[0]?.info?.count || 0;
+    state.charTotaalPaginas = Math.ceil(apiTotaalPaginas / apiPaginasNodig);
+
+    resultaten = sorteerPersonages(resultaten, state.charSortering);
+    state.charResultaten = resultaten;
+
+    if (charCount) charCount.textContent = `${apiTotaalAantal} personages gevonden`;
+
+    renderPersonages(charGrid, resultaten, openModal, onFavWijziging);
+    updatePaginering({ vorigeBtn: charPrev, volgendeBtn: charNext, infoEl: charPageInfo, huidigePagina: state.charPagina, totaalPaginas: state.charTotaalPaginas });
+
+    renderFilterTags(
+      $('#char-active-tags'),
+      { Naam: state.charFilters.naam, Status: state.charFilters.status, Geslacht: state.charFilters.geslacht, Soort: state.charFilters.soort },
+      (key) => verwijderCharFilter(key)
+    );
+
+  } catch (err) {
+    console.error('Personages laden mislukt:', err);
+    charGrid.innerHTML = `<p style="color:var(--danger);font-weight:700;padding:2rem 0;grid-column:1/-1;">Kon personages niet laden. Controleer je internetverbinding.</p>`;
+    toonToast('Personages konden niet geladen worden.', 'error');
+  }
+};
+
+// Sorteer een array personages op basis van de sortering
+const sorteerPersonages = (lijst, sortering) => {
+  return [...lijst].sort((a, b) => {
+    switch (sortering) {
+      case 'name-asc':    return a.name.localeCompare(b.name);
+      case 'name-desc':   return b.name.localeCompare(a.name);
+      case 'id-asc':      return a.id - b.id;
+      case 'id-desc':     return b.id - a.id;
+      case 'status-asc':  return a.status.localeCompare(b.status);
+      case 'species-asc': return a.species.localeCompare(b.species);
+      default:            return 0;
+    }
+  });
+};
