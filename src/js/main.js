@@ -96,3 +96,21 @@ $('#hamburger')?.addEventListener('click', () => {
   const isOpen = menu?.classList.toggle('open');
   $('#hamburger')?.setAttribute('aria-expanded', String(!!isOpen));
 });
+
+// --- Observer API: scroll-naar-boven knop ---
+
+const scrollUpBtn = $('#scroll-up');
+const scrollObserver = new IntersectionObserver(
+  ([entry]) => scrollUpBtn?.classList.toggle('hidden', entry.isIntersecting),
+  { threshold: 0 }
+);
+if ($('#site-header')) scrollObserver.observe($('#site-header'));
+scrollUpBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Observer API: header schaduw bij scrollen
+const schaduwObserver = new IntersectionObserver(
+  ([entry]) => $('#site-header')?.classList.toggle('scrolled', !entry.isIntersecting),
+  { threshold: 0, rootMargin: '-80px 0px 0px 0px' }
+);
+if ($('#app-main')) schaduwObserver.observe($('#app-main'));
+
