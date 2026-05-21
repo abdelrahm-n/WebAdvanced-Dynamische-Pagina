@@ -184,3 +184,58 @@ const sorteerPersonages = (lijst, sortering) => {
     }
   });
 };
+
+// Debounce: wacht tot de gebruiker stopt met typen
+const debounce = (fn, vertraging = 400) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), vertraging);
+  };
+};
+
+// Filter events personages
+const charSearchInput = $('#char-search');
+charSearchInput?.addEventListener('input', debounce((e) => {
+  state.charFilters.naam = e.target.value.trim();
+  state.charPagina = 1;
+  laadPersonages();
+}));
+
+$('#char-search-clear')?.addEventListener('click', () => {
+  charSearchInput.value     = '';
+  state.charFilters.naam    = '';
+  state.charPagina          = 1;
+  laadPersonages();
+  charSearchInput.focus();
+});
+
+$('#char-status')?.addEventListener('change', (e) => { state.charFilters.status = e.target.value; state.charPagina = 1; laadPersonages(); });
+$('#char-gender')?.addEventListener('change', (e) => { state.charFilters.geslacht = e.target.value; state.charPagina = 1; laadPersonages(); });
+$('#char-species')?.addEventListener('change', (e) => { state.charFilters.soort = e.target.value; state.charPagina = 1; laadPersonages(); });
+$('#char-sort')?.addEventListener('change', (e) => { state.charSortering = e.target.value; laadPersonages(); });
+
+$('#char-reset')?.addEventListener('click', () => {
+  state.charFilters = { naam: '', status: '', geslacht: '', soort: '' };
+  state.charPagina  = 1;
+  if (charSearchInput)       charSearchInput.value       = '';
+  const statusEl = $('#char-status');   if (statusEl)  statusEl.value  = '';
+  const genderEl = $('#char-gender');   if (genderEl)  genderEl.value  = '';
+  const soortEl  = $('#char-species');  if (soortEl)   soortEl.value   = '';
+  const sortEl   = $('#char-sort');     if (sortEl)    sortEl.value    = 'name-asc';
+  laadPersonages();
+  toonToast('Filters gereset.', 'info', 2000);
+});
+
+const verwijderCharFilter = (key) => {
+  const map = { Naam: 'naam', Status: 'status', Geslacht: 'geslacht', Soort: 'soort' };
+  const veld = map[key];
+  if (!veld) return;
+  state.charFilters[veld] = '';
+  state.charPagina = 1;
+  if (veld === 'naam' && charSearchInput) charSearchInput.value = '';
+  const sel = { status: '#char-status', geslacht: '#char-gender', soort: '#char-species' }[veld];
+  if (sel) $(sel).value = '';
+  laadPersonages();
+};
+
