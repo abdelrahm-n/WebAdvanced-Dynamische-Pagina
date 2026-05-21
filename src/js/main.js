@@ -246,3 +246,40 @@ charNext?.addEventListener('click', () => {
   if (state.charPagina < state.charTotaalPaginas) { state.charPagina++; laadPersonages(); scrollNaarSectie('section-characters'); }
 });
 
+// --- Modal ---
+
+const modalBackdrop = $('#modal-backdrop');
+const modalInner    = $('#modal-inner');
+const modalClose    = $('#modal-close');
+
+const openModal = async (id) => {
+  modalBackdrop?.classList.add('open');
+  modalBackdrop?.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  if (modalInner) {
+    modalInner.innerHTML = `<div style="padding:3rem;text-align:center;color:var(--text-muted);font-weight:700;">Laden...</div>`;
+  }
+
+  try {
+    const personage = await fetchPersonageById(id);
+    renderModalInhoud(modalInner, personage, onFavWijziging);
+  } catch (err) {
+    console.error('Modal laden mislukt:', err);
+    if (modalInner) {
+      modalInner.innerHTML = `<p style="padding:2rem;color:var(--danger);font-weight:700;">Fout bij laden: ${esc(err.message)}</p>`;
+    }
+  }
+};
+
+const sluitModal = () => {
+  modalBackdrop?.classList.remove('open');
+  modalBackdrop?.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+};
+
+modalClose?.addEventListener('click', sluitModal);
+modalBackdrop?.addEventListener('click', (e) => { if (e.target === modalBackdrop) sluitModal(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modalBackdrop?.classList.contains('open')) sluitModal();
+});
