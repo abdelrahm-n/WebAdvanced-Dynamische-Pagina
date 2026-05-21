@@ -239,3 +239,10 @@ const verwijderCharFilter = (key) => {
   laadPersonages();
 };
 
+charPrev?.addEventListener('click', () => {
+  if (state.charPagina > 1) { state.charPagina--; laadPersonages(); scrollNaarSectie('section-characters'); }
+});
+charNext?.addEventListener('click', () => {
+  if (state.charPagina < state.charTotaalPaginas) { state.charPagina++; laadPersonages(); scrollNaarSectie('section-characters'); }
+});
+
