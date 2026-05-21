@@ -59,7 +59,7 @@ const bouwPersonageKaart = (personage) => {
     <article class="char-card" data-id="${personage.id}" tabindex="0" aria-label="Personage: ${esc(personage.name)}">
 
       <div class="char-photo-wrap" data-detail="${personage.id}">
-        <img class="char-photo" src="${esc(personage.image)}" alt="${esc(personage.name)}" loading="lazy" />
+        <img class="char-photo" src="${esc(personage.image)}" alt="${esc(personage.name)}" />
         <span class="char-status-badge ${sc}">${nlStatus}</span>
         <button class="char-fav-btn ${fav ? 'active' : ''}" data-fav-id="${personage.id}" title="${fav ? 'Verwijder favoriet' : 'Voeg toe aan favorieten'}">
           ${fav ? '&#10084;' : '&#9825;'}
