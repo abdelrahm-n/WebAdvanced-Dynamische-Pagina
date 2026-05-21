@@ -283,3 +283,51 @@ modalBackdrop?.addEventListener('click', (e) => { if (e.target === modalBackdrop
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modalBackdrop?.classList.contains('open')) sluitModal();
 });
+
+// --- Favorieten ---
+
+const onFavWijziging = (toegevoegd, personage) => {
+  toonToast(
+    toegevoegd ? `${personage.name} toegevoegd aan favorieten` : `${personage.name} verwijderd uit favorieten`,
+    toegevoegd ? 'success' : 'info'
+  );
+  updateFavBadge();
+  if (state.actieveSectie === 'favorites') renderFavorietenSectie();
+};
+
+const updateFavBadge = () => {
+  const aantal = getFavorieten().length;
+  $$('#fav-badge').forEach(el => { el.textContent = aantal; });
+};
+
+const favGrid  = $('#fav-grid');
+const favEmpty = $('#fav-empty');
+const favTotal = $('#fav-total');
+
+const renderFavorietenSectie = () => {
+  const favorieten = getFavorieten();
+  updateFavBadge();
+
+  const isLeeg = favorieten.length === 0;
+  favEmpty?.classList.toggle('hidden', !isLeeg);
+  if (favTotal) favTotal.textContent = `${favorieten.length} personage${favorieten.length !== 1 ? 's' : ''} opgeslagen`;
+
+  if (isLeeg) {
+    if (favGrid) favGrid.innerHTML = '';
+    return;
+  }
+
+  renderPersonages(favGrid, favorieten, openModal, (toegevoegd, personage) => {
+    onFavWijziging(toegevoegd, personage);
+    renderFavorietenSectie();
+  });
+};
+
+$('#fav-clear-all')?.addEventListener('click', () => {
+  if (!confirm('Weet je zeker dat je alle favorieten wilt verwijderen?')) return;
+  leegFavorieten();
+  updateFavBadge();
+  renderFavorietenSectie();
+  toonToast('Alle favorieten verwijderd.', 'info');
+});
+
