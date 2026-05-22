@@ -331,3 +331,97 @@ $('#fav-clear-all')?.addEventListener('click', () => {
   toonToast('Alle favorieten verwijderd.', 'info');
 });
 
+// --- Afleveringen ---
+
+const epTbody    = $('#ep-tbody');
+const epCount    = $('#ep-count');
+const epPrev     = $('#ep-prev');
+const epNext     = $('#ep-next');
+const epPageInfo = $('#ep-page-info');
+const EP_PER_PAGINA = 20;
+
+const renderAfleveringPagina = () => {
+  let gefilterd = [...state.alleAfleveringen];
+
+  // Filter op naam
+  if (state.epFilters.naam) {
+    const zoekopdracht = state.epFilters.naam.toLowerCase();
+    gefilterd = gefilterd.filter(ep => ep.name.toLowerCase().includes(zoekopdracht));
+  }
+
+  // Filter op seizoen
+  if (state.epFilters.episode) {
+    gefilterd = gefilterd.filter(ep => ep.episode.startsWith(state.epFilters.episode));
+  }
+
+  // Sorteren
+  gefilterd.sort((a, b) => {
+    switch (state.epSortering) {
+      case 'ep-asc':    return a.id - b.id;
+      case 'ep-desc':   return b.id - a.id;
+      case 'name-asc':  return a.name.localeCompare(b.name);
+      case 'name-desc': return b.name.localeCompare(a.name);
+      case 'date-asc':  return new Date(a.air_date) - new Date(b.air_date);
+      case 'date-desc': return new Date(b.air_date) - new Date(a.air_date);
+      default:          return 0;
+    }
+  });
+
+  state.epGefilterd = gefilterd;
+  const totaalPaginas = Math.max(1, Math.ceil(gefilterd.length / EP_PER_PAGINA));
+  if (state.epPagina > totaalPaginas) state.epPagina = 1;
+
+  const start  = (state.epPagina - 1) * EP_PER_PAGINA;
+  const pagina = gefilterd.slice(start, start + EP_PER_PAGINA);
+
+  if (epCount) epCount.textContent = `${gefilterd.length} afleveringen gevonden`;
+
+  renderAfleveringenTabel(epTbody, pagina);
+  updatePaginering({ vorigeBtn: epPrev, volgendeBtn: epNext, infoEl: epPageInfo, huidigePagina: state.epPagina, totaalPaginas });
+
+  renderFilterTags(
+    $('#ep-active-tags'),
+    { Naam: state.epFilters.naam, Seizoen: state.epFilters.episode },
+    (key) => {
+      if (key === 'Naam')    { state.epFilters.naam = ''; const el = $('#ep-search'); if (el) el.value = ''; }
+      if (key === 'Seizoen') { state.epFilters.episode = ''; const el = $('#ep-season'); if (el) el.value = ''; }
+      state.epPagina = 1;
+      renderAfleveringPagina();
+    }
+  );
+};
+
+const laadAfleveringen = async () => {
+  if (state.alleAfleveringen.length > 0) { renderAfleveringPagina(); return; }
+
+  if (epTbody) epTbody.innerHTML = `<tr><td colspan="7" style="padding:2rem;color:var(--text-muted);font-weight:700;">Laden...</td></tr>`;
+
+  try {
+    state.alleAfleveringen = await fetchAlleAfleveringen();
+    renderAfleveringPagina();
+  } catch (err) {
+    console.error('Afleveringen laden mislukt:', err);
+    toonToast('Afleveringen konden niet geladen worden.', 'error');
+  }
+};
+
+$('#ep-search')?.addEventListener('input', debounce((e) => { state.epFilters.naam = e.target.value.trim(); state.epPagina = 1; renderAfleveringPagina(); }));
+$('#ep-search-clear')?.addEventListener('click', () => { const el = $('#ep-search'); if (el) el.value = ''; state.epFilters.naam = ''; state.epPagina = 1; renderAfleveringPagina(); });
+$('#ep-season')?.addEventListener('change', (e) => { state.epFilters.episode = e.target.value; state.epPagina = 1; renderAfleveringPagina(); });
+$('#ep-sort')?.addEventListener('change', (e) => { state.epSortering = e.target.value; renderAfleveringPagina(); });
+
+$('#ep-reset')?.addEventListener('click', () => {
+  state.epFilters = { naam: '', episode: '' };
+  state.epPagina  = 1;
+  const epSearch = $('#ep-search');   if (epSearch) epSearch.value = '';
+  const epSeason = $('#ep-season');   if (epSeason) epSeason.value = '';
+  renderAfleveringPagina();
+  toonToast('Filters gereset.', 'info', 2000);
+});
+
+epPrev?.addEventListener('click', () => { if (state.epPagina > 1) { state.epPagina--; renderAfleveringPagina(); scrollNaarSectie('section-episodes'); } });
+epNext?.addEventListener('click', () => {
+  const totaal = Math.ceil(state.epGefilterd.length / EP_PER_PAGINA);
+  if (state.epPagina < totaal) { state.epPagina++; renderAfleveringPagina(); scrollNaarSectie('section-episodes'); }
+});
+
