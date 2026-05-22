@@ -491,3 +491,26 @@ $('#loc-reset')?.addEventListener('click', () => {
 locPrev?.addEventListener('click', () => { if (state.locPagina > 1) { state.locPagina--; laadLocaties(); scrollNaarSectie('section-locations'); } });
 locNext?.addEventListener('click', () => { if (state.locPagina < state.locTotaalPaginas) { state.locPagina++; laadLocaties(); scrollNaarSectie('section-locations'); } });
 
+// --- Instellingen ---
+
+const syncInstellingenUI = () => {
+  const setThemeEl = $('#set-theme');
+  if (setThemeEl) setThemeEl.value = getThema();
+
+  const setKaarten = $('#set-cards-per-page');
+  if (setKaarten) setKaarten.value = String(getKaartenPerPagina());
+
+  const loc   = getLocatie();
+  const locEl = $('#location-display');
+  if (locEl) {
+    locEl.textContent = loc
+      ? `Opgeslagen: ${loc.stad} (${loc.lat.toFixed(2)}, ${loc.lon.toFixed(2)})`
+      : 'Geen locatie opgeslagen.';
+  }
+
+  const cacheEl = $('#cache-status');
+  if (cacheEl) {
+    const info = cacheInfo();
+    cacheEl.textContent = `${info.aantal} gecachte verzoeken — ${info.kb} KB opgeslagen`;
+  }
+};
