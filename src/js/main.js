@@ -425,3 +425,69 @@ epNext?.addEventListener('click', () => {
   if (state.epPagina < totaal) { state.epPagina++; renderAfleveringPagina(); scrollNaarSectie('section-episodes'); }
 });
 
+// --- Locaties ---
+
+const locGrid     = $('#loc-grid');
+const locCount    = $('#loc-count');
+const locPrev     = $('#loc-prev');
+const locNext     = $('#loc-next');
+const locPageInfo = $('#loc-page-info');
+
+const laadLocaties = async () => {
+  try {
+    toonSkeletons(locGrid, 12);
+
+    const data = await fetchLocaties({ pagina: state.locPagina, naam: state.locFilters.naam, type: state.locFilters.type });
+    let resultaten = data.results || [];
+
+    // Clientzijde sortering
+    resultaten.sort((a, b) => {
+      switch (state.locSortering) {
+        case 'name-asc':       return a.name.localeCompare(b.name);
+        case 'name-desc':      return b.name.localeCompare(a.name);
+        case 'id-asc':         return a.id - b.id;
+        case 'residents-desc': return (b.residents?.length || 0) - (a.residents?.length || 0);
+        default:               return 0;
+      }
+    });
+
+    state.locTotaalPaginas = data.info?.pages || 1;
+    if (locCount) locCount.textContent = `${data.info?.count || 0} locaties gevonden`;
+
+    renderLocaties(locGrid, resultaten);
+    updatePaginering({ vorigeBtn: locPrev, volgendeBtn: locNext, infoEl: locPageInfo, huidigePagina: state.locPagina, totaalPaginas: state.locTotaalPaginas });
+
+    renderFilterTags(
+      $('#loc-active-tags'),
+      { Naam: state.locFilters.naam, Type: state.locFilters.type },
+      (key) => {
+        if (key === 'Naam') { state.locFilters.naam = ''; const el = $('#loc-search'); if (el) el.value = ''; }
+        if (key === 'Type') { state.locFilters.type = ''; const el = $('#loc-type');   if (el) el.value = ''; }
+        state.locPagina = 1;
+        laadLocaties();
+      }
+    );
+
+  } catch (err) {
+    console.error('Locaties laden mislukt:', err);
+    toonToast('Locaties konden niet geladen worden.', 'error');
+  }
+};
+
+$('#loc-search')?.addEventListener('input', debounce((e) => { state.locFilters.naam = e.target.value.trim(); state.locPagina = 1; laadLocaties(); }));
+$('#loc-search-clear')?.addEventListener('click', () => { const el = $('#loc-search'); if (el) el.value = ''; state.locFilters.naam = ''; state.locPagina = 1; laadLocaties(); });
+$('#loc-type')?.addEventListener('change', (e) => { state.locFilters.type = e.target.value; state.locPagina = 1; laadLocaties(); });
+$('#loc-sort')?.addEventListener('change', (e) => { state.locSortering = e.target.value; laadLocaties(); });
+
+$('#loc-reset')?.addEventListener('click', () => {
+  state.locFilters = { naam: '', type: '' };
+  state.locPagina  = 1;
+  const locSearch = $('#loc-search'); if (locSearch) locSearch.value = '';
+  const locType   = $('#loc-type');   if (locType)   locType.value   = '';
+  laadLocaties();
+  toonToast('Filters gereset.', 'info', 2000);
+});
+
+locPrev?.addEventListener('click', () => { if (state.locPagina > 1) { state.locPagina--; laadLocaties(); scrollNaarSectie('section-locations'); } });
+locNext?.addEventListener('click', () => { if (state.locPagina < state.locTotaalPaginas) { state.locPagina++; laadLocaties(); scrollNaarSectie('section-locations'); } });
+
