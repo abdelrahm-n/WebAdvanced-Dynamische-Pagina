@@ -629,3 +629,18 @@ feedbackForm?.addEventListener('submit', (e) => {
   toonToast('Feedback verstuurd! Bedankt.', 'success');
 });
 
+// Real-time validatie bij verlaten van een veld
+['fb-name', 'fb-email', 'fb-msg'].forEach(id => {
+  $(`#${id}`)?.addEventListener('blur', valideerFeedback);
+});
+
+// --- Laad secties on demand ---
+
+$$('.nav-btn, .mobile-nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const sectie = btn.dataset.section;
+    if (sectie === 'episodes' && state.alleAfleveringen.length === 0) laadAfleveringen();
+    if (sectie === 'locations') laadLocaties();
+  });
+});
+
