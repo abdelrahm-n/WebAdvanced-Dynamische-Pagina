@@ -553,3 +553,18 @@ $('#detect-location-btn')?.addEventListener('click', () => {
     () => toonToast('Locatie detecteren mislukt.', 'error')
   );
 });
+
+$('#clear-cache-btn')?.addEventListener('click', () => {
+  const n = cacheLegen();
+  syncInstellingenUI();
+  toonToast(`${n} gecachte items gewist.`, 'success');
+});
+
+$('#clear-all-btn')?.addEventListener('click', () => {
+  if (!confirm('Dit verwijdert ALLE opgeslagen data inclusief favorieten. Doorgaan?')) return;
+  wisAlles();
+  pasThemaToe('dark');
+  updateFavBadge();
+  syncInstellingenUI();
+  toonToast('Alle data gewist.', 'info');
+});
