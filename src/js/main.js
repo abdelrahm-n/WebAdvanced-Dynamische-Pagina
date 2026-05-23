@@ -568,3 +568,64 @@ $('#clear-all-btn')?.addEventListener('click', () => {
   syncInstellingenUI();
   toonToast('Alle data gewist.', 'info');
 });
+
+// --- Formuliervalidatie ---
+
+const feedbackForm = $('#feedback-form');
+
+const valideerFeedback = () => {
+  let geldig = true;
+
+  // Helper: toon of verberg een foutmelding
+  const setFout = (inputId, foutId, bericht) => {
+    const input = $(`#${inputId}`);
+    const foutEl = $(`#${foutId}`);
+    if (bericht) {
+      input?.classList.add('invalid');
+      if (foutEl) foutEl.textContent = bericht;
+      geldig = false;
+    } else {
+      input?.classList.remove('invalid');
+      if (foutEl) foutEl.textContent = '';
+    }
+  };
+
+  const naam  = $('#fb-name')?.value.trim();
+  setFout('fb-name', 'fb-name-err', !naam ? 'Naam is verplicht.' : naam.length < 2 ? 'Naam moet minimaal 2 tekens bevatten.' : '');
+
+  const email   = $('#fb-email')?.value.trim();
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  setFout('fb-email', 'fb-email-err', !email ? 'E-mailadres is verplicht.' : !emailRe.test(email) ? 'Voer een geldig e-mailadres in.' : '');
+
+  const bericht = $('#fb-msg')?.value.trim();
+  setFout('fb-msg', 'fb-msg-err', !bericht ? 'Bericht is verplicht.' : bericht.length < 10 ? 'Bericht moet minimaal 10 tekens bevatten.' : '');
+
+  const akkoord = $('#fb-agree')?.checked;
+  const akkoordFout = $('#fb-agree-err');
+  if (!akkoord) {
+    if (akkoordFout) akkoordFout.textContent = 'Je moet akkoord gaan om te versturen.';
+    geldig = false;
+  } else {
+    if (akkoordFout) akkoordFout.textContent = '';
+  }
+
+  return geldig;
+};
+
+feedbackForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!valideerFeedback()) return;
+
+  slaFeedbackOp({
+    naam:    $('#fb-name').value.trim(),
+    email:   $('#fb-email').value.trim(),
+    bericht: $('#fb-msg').value.trim(),
+  });
+
+  feedbackForm.reset();
+  const successEl = $('#fb-success');
+  successEl?.classList.remove('hidden');
+  setTimeout(() => successEl?.classList.add('hidden'), 5000);
+  toonToast('Feedback verstuurd! Bedankt.', 'success');
+});
+
