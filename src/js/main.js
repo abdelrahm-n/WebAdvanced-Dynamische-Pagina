@@ -514,3 +514,42 @@ const syncInstellingenUI = () => {
     cacheEl.textContent = `${info.aantal} gecachte verzoeken — ${info.kb} KB opgeslagen`;
   }
 };
+
+$('#set-theme')?.addEventListener('change', (e) => pasThemaToe(e.target.value));
+
+$('#set-cards-per-page')?.addEventListener('change', (e) => {
+  const n = parseInt(e.target.value, 10);
+  state.kaartenPerPagina = n;
+  setKaartenPerPagina(n);
+  state.charPagina = 1;
+  navigeerNaar('characters');
+  laadPersonages();
+  toonToast(`Kaarten per pagina ingesteld op ${n}.`, 'success', 2000);
+});
+
+$('#detect-location-btn')?.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    toonToast('Geolocatie wordt niet ondersteund door je browser.', 'error');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude: lat, longitude: lon } = pos.coords;
+      let stad = 'Onbekend';
+
+      try {
+        const res  = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+        const data = await res.json();
+        stad = data.address?.city || data.address?.town || data.address?.village || 'Onbekend';
+      } catch {
+        // Geocoding mislukt, gebruik coordinaten als fallback
+      }
+
+      setLocatie({ lat, lon, stad });
+      syncInstellingenUI();
+      toonToast(`Locatie opgeslagen: ${stad}`, 'success');
+    },
+    () => toonToast('Locatie detecteren mislukt.', 'error')
+  );
+});
