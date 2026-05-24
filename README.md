@@ -165,12 +165,3 @@ De applicatie ondersteunt zowel een licht als donker thema.
 
 
 ---
-## Auteur
-
-Ontwikkeld als een dynamische webapplicatie met focus op:
-
-* Vanilla JavaScript
-* API-integratie
-* Responsive UI
-* Performance en caching
-* Moderne frontend-architectuur
