@@ -122,7 +122,11 @@ const charPrev     = $('#char-prev');
 const charNext     = $('#char-next');
 const charPageInfo = $('#char-page-info');
 
+let charAanHetLaden = false;
+
 const laadPersonages = async () => {
+  if (charAanHetLaden) return;
+  charAanHetLaden = true;
   try {
     const cpp = state.kaartenPerPagina;
     const apiPaginasNodig = Math.ceil(cpp / 20);
@@ -167,6 +171,8 @@ const laadPersonages = async () => {
     console.error('Personages laden mislukt:', err);
     charGrid.innerHTML = `<p style="color:var(--danger);font-weight:700;padding:2rem 0;grid-column:1/-1;">Kon personages niet laden. Controleer je internetverbinding.</p>`;
     toonToast('Personages konden niet geladen worden.', 'error');
+  } finally {
+    charAanHetLaden = false;
   }
 };
 
@@ -433,7 +439,11 @@ const locPrev     = $('#loc-prev');
 const locNext     = $('#loc-next');
 const locPageInfo = $('#loc-page-info');
 
+let locAanHetLaden = false;
+
 const laadLocaties = async () => {
+  if (locAanHetLaden) return;
+  locAanHetLaden = true;
   try {
     toonSkeletons(locGrid, 12);
 
@@ -471,6 +481,8 @@ const laadLocaties = async () => {
   } catch (err) {
     console.error('Locaties laden mislukt:', err);
     toonToast('Locaties konden niet geladen worden.', 'error');
+  } finally {
+    locAanHetLaden = false;
   }
 };
 
