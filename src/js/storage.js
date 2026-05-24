@@ -107,3 +107,5 @@ export const wisAlles = () => {
   const appSleutels = Object.keys(localStorage).filter(k => k.startsWith('rm_'));
   appSleutels.forEach(k => localStorage.removeItem(k));
 };
+
+// Einde storage.js - rm_ prefix voor naamruimte-isolatie
