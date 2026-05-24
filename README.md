@@ -1,29 +1,35 @@
 # Rick & Morty Explorer
 
-A web app to explore all characters, episodes and locations from the Rick & Morty universe. Built with Vite and Vanilla JavaScript — no frameworks, no dependencies.
+Een webapplicatie om alle personages, afleveringen en locaties uit het Rick & Morty-universum te verkennen. Deze applicatie is gebouwd met Vite en Vanilla JavaScript — zonder frameworks of externe dependencies.
 
-## Features
+---
 
-- Browse, search and filter all characters, episodes and locations
-- Search with debounce, multiple filter combinations and sort options
-- Save favourite characters with localStorage persistence
-- Character detail modal with episode list
-- Dark / Light theme toggle (saved in localStorage)
-- Skeleton loaders while data is fetching
-- Toast notifications for user feedback
-- Feedback form with real-time validation
-- API cache with 15-minute TTL to reduce network requests
-- Fully responsive — mobile, tablet and desktop
+## Functionaliteiten
 
-## Tech stack
+* Bladeren, zoeken en filteren van alle personages, afleveringen en locaties
+* Zoekfunctie met debounce, meerdere filters en sorteermogelijkheden
+* Favoriete personages opslaan via `localStorage`
+* Detailmodal van personages inclusief afleveringslijst
+* Donker / licht thema wisselaar met opslag in `localStorage`
+* Skeleton loaders tijdens het laden van data
+* Toastmeldingen voor gebruikersfeedback
+* Feedbackformulier met realtime validatie
+* API-cache met een TTL van 15 minuten om netwerkverzoeken te verminderen
+* Volledig responsive design voor mobiel, tablet en desktop
 
-- [Vite](https://vitejs.dev) — bundler and dev server
-- Vanilla JavaScript (ES modules)
-- [Rick and Morty API](https://rickandmortyapi.com) — free, no API key needed
+---
 
-## Installation
+## Tech Stack
 
-Clone the repository and install dependencies:
+* **Vite** — bundler en development server
+* **Vanilla JavaScript (ES Modules)**
+* **Rick and Morty API** — gratis API zonder API-sleutel
+
+---
+
+## Installatie
+
+Clone de repository en installeer de dependencies:
 
 ```bash
 git clone https://github.com/abdelrahm-n/WebAdvanced-Dynamische-Pagina.git
@@ -31,61 +37,155 @@ cd WebAdvanced-Dynamische-Pagina
 npm install
 ```
 
-Start the development server:
+Start daarna de development server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open vervolgens de applicatie in je browser via:
 
-## Build for production
+```text
+http://localhost:5173
+```
+
+---
+
+## Productie Build
+
+Om een productieversie van de applicatie te genereren:
 
 ```bash
 npm run build
 ```
 
-Output goes to the `dist/` folder.
+De gegenereerde bestanden worden opgeslagen in de map:
 
-## Project structure
-
+```text
+dist/
 ```
+
+---
+
+## Projectstructuur
+
+```text
 ├── index.html
 ├── package.json
 ├── vite.config.js
 └── src/
     ├── css/
-    │   ├── main.css          # Variables, layout, base styles
-    │   ├── components.css    # Cards, hover overlay, modal, table
-    │   └── responsive.css    # Breakpoints (640px, 960px, 1400px)
+    │   ├── main.css
+    │   ├── components.css
+    │   └── responsive.css
+    │
     └── js/
-        ├── api.js            # API calls, caching, retry logic
-        ├── storage.js        # localStorage helpers
-        ├── ui.js             # DOM rendering functions
-        └── main.js           # App state, events and navigation
+        ├── api.js
+        ├── storage.js
+        ├── ui.js
+        └── main.js
 ```
 
-## Branch overview
+### Overzicht van bestanden
 
-All work is on the `main` branch with a realistic commit history of 60 commits.
+#### CSS
 
-| Period | What was built |
-|---|---|
-| May 10 – 12 | `index.html` — full HTML structure, all sections and forms |
-| May 13 – 16 | CSS — variables, layout, card components, responsive styles |
-| May 16 – 24 | JavaScript — API layer, localStorage, UI rendering, app logic |
+| Bestand          | Beschrijving                              |
+| ---------------- | ----------------------------------------- |
+| `main.css`       | Variabelen, layout en basisstijlen        |
+| `components.css` | Cards, overlays, modals en tabellen       |
+| `responsive.css` | Responsive breakpoints en mobiele layouts |
 
-Commits follow the [Conventional Commits](https://www.conventionalcommits.org) format:
+#### JavaScript
 
-| Prefix | When used |
-|---|---|
-| `feat:` | New feature or section added |
-| `fix:` | Bug fix |
-| `refactor:` | Code improvement without behaviour change |
-| `style:` | CSS-only change |
-| `chore:` | Config, tooling or cleanup |
-| `docs:` | Documentation only |
+| Bestand      | Beschrijving                        |
+| ------------ | ----------------------------------- |
+| `api.js`     | API-calls, caching en retry-logica  |
+| `storage.js` | Helpers voor `localStorage`         |
+| `ui.js`      | DOM-rendering en UI-functionaliteit |
+| `main.js`    | App state, events en navigatie      |
+
+---
+
+### Conventional Commits
+
+De commits volgen het **Conventional Commits** formaat:
+
+| Prefix      | Betekenis                               |
+| ----------- | --------------------------------------- |
+| `feat:`     | Nieuwe functionaliteit                  |
+| `fix:`      | Bugfix                                  |
+| `refactor:` | Codeverbetering zonder gedragswijziging |
+| `style:`    | Alleen stylingaanpassingen              |
+| `chore:`    | Configuratie of cleanup                 |
+| `docs:`     | Documentatie                            |
+
+---
 
 ## API
 
-Data comes from the free [Rick and Morty API](https://rickandmortyapi.com) by Axel Fuhrmann. No registration or API key required. Responses are cached in `localStorage` for 15 minutes to avoid repeated requests.
+De applicatie gebruikt de gratis **Rick and Morty API** van Axel Fuhrmann.
+
+Eigenschappen van de API:
+
+* Geen registratie vereist
+* Geen API-sleutel nodig
+* Snelle publieke endpoints
+* Data wordt 15 minuten gecachet in `localStorage`
+
+Meer informatie:
+
+```text
+https://rickandmortyapi.com
+```
+
+---
+
+## Responsive Design
+
+De applicatie is volledig responsive en geoptimaliseerd voor:
+
+* Mobiele apparaten
+* Tablets
+* Desktop schermen
+
+Gebruikte breakpoints:
+
+```text
+640px
+960px
+1400px
+```
+---
+
+## Thema Ondersteuning
+
+De applicatie ondersteunt zowel een licht als donker thema.
+
+* Themawissel gebeurt dynamisch
+* Voorkeur wordt opgeslagen in `localStorage`
+* Thema blijft behouden na herladen van de pagina
+
+---
+
+## Website voorbeeld
+darkmode:
+<img width="1920" height="936" alt="01-20-03-049 on the date of 25-05-26" src="https://github.com/user-attachments/assets/7ac82c7a-42ba-42b5-a38f-ec4913ee580b" />
+<img width="1920" height="936" alt="01-21-39-702 on the date of 25-05-26" src="https://github.com/user-attachments/assets/d084c96b-a4a6-4203-93d5-81e293680532" />
+
+
+lightmode:
+<img width="1920" height="936" alt="01-21-07-973 on the date of 25-05-26" src="https://github.com/user-attachments/assets/a826b92c-e1fe-45b2-9d58-0fd273014a13" />
+<img width="1920" height="936" alt="01-21-57-239 on the date of 25-05-26" src="https://github.com/user-attachments/assets/cc707fde-5f34-4e48-bf50-67abb87aa655" />
+
+
+---
+## Auteur
+
+Ontwikkeld als een dynamische webapplicatie met focus op:
+
+* Vanilla JavaScript
+* API-integratie
+* Responsive UI
+* Performance en caching
+* Moderne frontend-architectuur
