@@ -198,3 +198,5 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
+
+/* Breakpoints: 640px mobiel, 960px tablet, 1400px groot scherm */
