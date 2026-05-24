@@ -9,8 +9,8 @@ const CACHE_DUUR = 15 * 60 * 1000; // 15 minuten
 const cacheOpslaan = (key, data) => {
   try {
     localStorage.setItem(key, JSON.stringify({ tijd: Date.now(), data }));
-  } catch (e) {
-    console.warn('Cache opslaan mislukt:', e);
+  } catch {
+    // localStorage vol of niet beschikbaar
   }
 };
 
@@ -42,25 +42,24 @@ export const cacheInfo = () => {
 // --- Basis fetch functie met caching ---
 
 export const apiFetch = async (url) => {
-  // Gebruik een veilige cache sleutel (geen btoa die kan crashen op speciale tekens)
   const cacheKey = 'rm_cache_' + url.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 100);
   const gecached = cacheOphalen(cacheKey);
   if (gecached) return gecached;
 
-  const response = await fetch(url);
-
-  // 404 = geen resultaten, geen echte fout
-  if (response.status === 404) {
-    return { results: [], info: { count: 0, pages: 0 } };
+  let fout;
+  for (let poging = 1; poging <= 2; poging++) {
+    try {
+      const response = await fetch(url);
+      if (response.status === 404) return { results: [], info: { count: 0, pages: 0 } };
+      if (!response.ok) throw new Error(`API fout ${response.status}`);
+      const data = await response.json();
+      cacheOpslaan(cacheKey, data);
+      return data;
+    } catch (err) {
+      fout = err;
+    }
   }
-
-  if (!response.ok) {
-    throw new Error(`API fout ${response.status}`);
-  }
-
-  const data = await response.json();
-  cacheOpslaan(cacheKey, data);
-  return data;
+  throw fout;
 };
 
 // --- Personages ---
@@ -89,20 +88,20 @@ export const fetchAfleveringen = async ({ pagina = 1, naam = '', episode = '' } 
   return apiFetch(`${BASE_URL}/episode?${params}`);
 };
 
-// Haal ALLE afleveringen op via meerdere pagina's tegelijk (Promise.all)
 export const fetchAlleAfleveringen = async () => {
   const eerste = await fetchAfleveringen({ pagina: 1 });
   const totaalPaginas = eerste.info?.pages || 1;
 
   if (totaalPaginas === 1) return eerste.results || [];
 
-  // Bouw een array van paginanummers en haal ze parallel op
   const paginaNummers = Array.from({ length: totaalPaginas - 1 }, (_, i) => i + 2);
-  const rest = await Promise.all(paginaNummers.map(p => fetchAfleveringen({ pagina: p })));
+  const resultaten = await Promise.allSettled(paginaNummers.map(p => fetchAfleveringen({ pagina: p })));
 
   return [
     ...(eerste.results || []),
-    ...rest.flatMap(r => r.results || []),
+    ...resultaten
+      .filter(r => r.status === 'fulfilled')
+      .flatMap(r => r.value.results || []),
   ];
 };
 
