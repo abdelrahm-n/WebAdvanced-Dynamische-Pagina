@@ -107,21 +107,6 @@ dist/
 
 ---
 
-### Conventional Commits
-
-De commits volgen het **Conventional Commits** formaat:
-
-| Prefix      | Betekenis                               |
-| ----------- | --------------------------------------- |
-| `feat:`     | Nieuwe functionaliteit                  |
-| `fix:`      | Bugfix                                  |
-| `refactor:` | Codeverbetering zonder gedragswijziging |
-| `style:`    | Alleen stylingaanpassingen              |
-| `chore:`    | Configuratie of cleanup                 |
-| `docs:`     | Documentatie                            |
-
----
-
 ## API
 
 De applicatie gebruikt de gratis **Rick and Morty API** van Axel Fuhrmann.
@@ -169,12 +154,12 @@ De applicatie ondersteunt zowel een licht als donker thema.
 ---
 
 ## Website voorbeeld
-darkmode:
+### darkmode:
 <img width="1920" height="936" alt="01-20-03-049 on the date of 25-05-26" src="https://github.com/user-attachments/assets/7ac82c7a-42ba-42b5-a38f-ec4913ee580b" />
 <img width="1920" height="936" alt="01-21-39-702 on the date of 25-05-26" src="https://github.com/user-attachments/assets/d084c96b-a4a6-4203-93d5-81e293680532" />
 
 
-lightmode:
+### lightmode:
 <img width="1920" height="936" alt="01-21-07-973 on the date of 25-05-26" src="https://github.com/user-attachments/assets/a826b92c-e1fe-45b2-9d58-0fd273014a13" />
 <img width="1920" height="936" alt="01-21-57-239 on the date of 25-05-26" src="https://github.com/user-attachments/assets/cc707fde-5f34-4e48-bf50-67abb87aa655" />
 
