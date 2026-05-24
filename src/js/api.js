@@ -43,7 +43,7 @@ export const cacheInfo = () => {
 
 export const apiFetch = async (url) => {
   // Gebruik een veilige cache sleutel (geen btoa die kan crashen op speciale tekens)
-  const cacheKey = 'rm_cache_' + url.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 120);
+  const cacheKey = 'rm_cache_' + url.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 100);
   const gecached = cacheOphalen(cacheKey);
   if (gecached) return gecached;
 
