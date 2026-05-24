@@ -644,3 +644,22 @@ $$('.nav-btn, .mobile-nav-btn').forEach(btn => {
   });
 });
 
+// --- Hulpfunctie ---
+
+const scrollNaarSectie = (id) => {
+  $(`#${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+// --- Initialisatie ---
+
+const init = async () => {
+  updateFavBadge();
+  syncInstellingenUI();
+  await laadPersonages();
+  console.log('Rick & Morty Explorer geladen.');
+};
+
+init().catch(err => {
+  console.error('Initialisatie mislukt:', err);
+  toonToast('De app kon niet opstarten. Probeer de pagina te herladen.', 'error', 6000);
+});
